@@ -11,7 +11,7 @@ public class SimpleServiceView extends SurfaceView implements SurfaceHolder.Call
     private boolean mIsDrawing;
     private SurfaceHolder mSurfaceHolder;
     private Canvas mCanvas;
-    private long FPS = 16;
+    private long FPS = 60;
     private CanvasUpdateProcess canvasUpdateProcess;
 
     public SimpleServiceView(Context context, AttributeSet attrs) {
@@ -42,11 +42,11 @@ public class SimpleServiceView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void run() {
-        while (mIsDrawing){
+        while (mIsDrawing) {
             drawSomething();
 
             try {
-                Thread.sleep(FPS);
+                Thread.sleep(1000 / FPS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -60,10 +60,10 @@ public class SimpleServiceView extends SurfaceView implements SurfaceHolder.Call
             if (canvasUpdateProcess != null)
                 canvasUpdateProcess.onDraw(mCanvas);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if (mCanvas != null){
+        } finally {
+            if (mCanvas != null) {
                 mSurfaceHolder.unlockCanvasAndPost(mCanvas);
             }
         }
